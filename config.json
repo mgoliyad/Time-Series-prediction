@@ -1,0 +1,58 @@
+{
+	"data": {
+		"filename": "ERIC.csv",
+		"columns": [
+			"Close"
+		],
+		"sequence_length": 25,
+		"train_test_split": 0.75,
+                "future_period": 25
+	},
+	"training": {
+		"epochs": 240,
+		"batch_size": 128
+	},
+	"model": {
+		"loss": "mse",
+		"optimizer": "adam",
+                "learnin_rate": 1e-4,
+                "metrics": "accuracy",
+		"save_dir": "saved_models",
+		"layers": [
+			{
+				"type": "bidirectional",
+				"neurons": 100,
+				"input_timesteps": 24,
+				"input_dim": 1,
+				"return_seq": true
+			},
+			{
+				"type": "dropout",
+				"rate": 0.2
+			},
+			{
+				"type": "bidirectional",
+				"neurons": 100,
+				"return_seq": true
+			},
+                        {
+				"type": "dropout",
+				"rate": 0.2
+			},
+			{
+				"type": "bidirectional",
+				"neurons": 100,
+				"return_seq": false
+			},
+			{
+				"type": "dropout",
+				"rate": 0.2
+			},
+			{
+				"type": "dense",
+				"neurons": 1,
+				"activation": "linear"
+			}
+		]
+	}
+}
